@@ -1,0 +1,21 @@
+{
+  "name": "gohitrate",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "workspaceMount": "source=${localWorkspaceFolder}/,target=/workspaces/,type=bind",
+  "workspaceFolder": "/workspaces/",
+  "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "usernamehw.errorlens",
+        "esbenp.prettier-vscode",
+        "christian-kohler.path-intellisense",
+        "pkief.material-icon-theme",
+        "wayou.vscode-todo-highlight",
+        "davidanson.vscode-markdownlint"
+      ]
+    }
+  }
+}
