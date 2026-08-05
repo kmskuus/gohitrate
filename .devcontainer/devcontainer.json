@@ -14,7 +14,8 @@
         "christian-kohler.path-intellisense",
         "pkief.material-icon-theme",
         "wayou.vscode-todo-highlight",
-        "davidanson.vscode-markdownlint"
+        "davidanson.vscode-markdownlint",
+        "golang.go"
       ]
     }
   }
