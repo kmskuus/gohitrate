@@ -15,6 +15,12 @@ GoHitRate is a lightweight local API load testing tool built for developers who 
 
 A native desktop GUI would mean platform-specific code and a much larger binary. Instead GoHitRate starts a local web server and opens your browser automatically. The entire frontend is embedded inside the binary so there are no loose files, no extensions, and nothing extra to install.
 
+## Built With
+
+- [Go](https://golang.org/): backend, HTTP server, binary compilation
+- [Vegeta](https://github.com/tsenart/vegeta): load testing engine
+- HTML, CSS, vanilla JavaScript: frontend embedded into the binary via `go:embed`
+
 ## Download & Run
 
 Grab the binary for your platform from the [Releases](https://github.com/kmskuus/gohitrate/releases) page.
