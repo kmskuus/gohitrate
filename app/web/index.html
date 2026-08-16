@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GoHitRate</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>GoHitRate</h1>
+        <p>Zero-install local API load tester</p>
+      </header>
+
+      <main>
+        <section class="config">
+          <h2>Test Configuration</h2>
+          <div class="field">
+            <label for="url">Target URL</label>
+            <input
+              type="text"
+              id="url"
+              placeholder="http://localhost:3000/api/endpoint"
+            />
+          </div>
+          <div class="field">
+            <label for="method">Method</label>
+            <select id="method">
+              <option>GET</option>
+              <option>POST</option>
+              <option>PUT</option>
+              <option>DELETE</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="rps">Requests per second</label>
+            <input type="number" id="rps" value="10" />
+          </div>
+          <div class="field">
+            <label for="duration">Duration (seconds)</label>
+            <input type="number" id="duration" value="10" />
+          </div>
+          <p id="request-summary" class="summary"></p>
+          <button id="start">Run Test</button>
+        </section>
+
+        <section class="results">
+          <h2>Results</h2>
+          <p class="placeholder">
+            Results will appear here after running a test.
+          </p>
+        </section>
+      </main>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
