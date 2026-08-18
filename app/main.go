@@ -32,6 +32,7 @@ type runResponse struct {
 	MeanLatency string   `json:"meanLatency,omitempty"`
 	P95Latency  string   `json:"p95Latency,omitempty"`
 	Errors      []string `json:"errors,omitempty"`
+	Timeline    []runner.DataPoint  `json:"timeline,omitempty"`
 }
 
 func runHandler(w http.ResponseWriter, r *http.Request) {
@@ -66,6 +67,7 @@ func runHandler(w http.ResponseWriter, r *http.Request) {
 		MeanLatency: results.MeanLatency.String(),
 		P95Latency:  results.P95Latency.String(),
 		Errors:      results.Errors,
+		Timeline:    results.Timeline,
 	})
 }
 
