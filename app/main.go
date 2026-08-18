@@ -7,6 +7,9 @@ import (
 	"io/fs"
 	"log"
 	"net/http"
+	"os/exec"
+	"runtime"
+	"time"
 
 	"github.com/kmskuus/gohitrate/internal/runner"
 	"github.com/kmskuus/gohitrate/internal/safety"
@@ -71,11 +74,25 @@ func runHandler(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+func openBrowser(url string) {
+    time.Sleep(500 * time.Millisecond)
+    switch runtime.GOOS {
+    case "windows":
+        exec.Command("cmd", "/c", "start", url).Start()
+    case "darwin":
+        exec.Command("open", url).Start()
+    default:
+        exec.Command("xdg-open", url).Start()
+    }
+}
+
 func main() {
 	webFS, err := fs.Sub(webFiles, "web")
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	go openBrowser("http://localhost:" + servicePort)
 
 	http.Handle("/", http.FileServer(http.FS(webFS)))
 	http.HandleFunc("/api/run", runHandler)
