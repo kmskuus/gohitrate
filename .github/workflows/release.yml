@@ -1,0 +1,40 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+
+      - name: Build Windows
+        working-directory: app
+        run: GOOS=windows GOARCH=amd64 go build -o ../dist/gohitrate-windows-amd64.exe .
+
+      - name: Build macOS
+        working-directory: app
+        run: GOOS=darwin GOARCH=amd64 go build -o ../dist/gohitrate-macos-amd64 .
+
+      - name: Build Linux
+        working-directory: app
+        run: GOOS=linux GOARCH=amd64 go build -o ../dist/gohitrate-linux-amd64 .
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/gohitrate-windows-amd64.exe
+            dist/gohitrate-macos-amd64
+            dist/gohitrate-linux-amd64
+          generate_release_notes: true
