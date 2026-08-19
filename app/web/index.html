@@ -4,10 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GoHitRate</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="styles/variables.css" />
+    <link rel="stylesheet" href="styles/base.css" />
+    <link rel="stylesheet" href="styles/components.css" />
+    <link rel="stylesheet" href="styles/theme.css" />
   </head>
   <body>
     <div class="container">
+      <!-- header: title and theme toggle -->
       <header>
         <div class="header-top">
           <div>
@@ -23,8 +27,11 @@
       </header>
 
       <main>
+        <!-- test configuration form -->
         <section class="config">
           <h2>Test Configuration</h2>
+
+          <!-- target url -->
           <div class="field">
             <label for="url">Target URL</label>
             <input
@@ -33,15 +40,20 @@
               placeholder="http://localhost:3000/api/endpoint"
             />
           </div>
+
+          <!-- http method -->
           <div class="field">
             <label for="method">Method</label>
             <select id="method">
               <option>GET</option>
               <option>POST</option>
               <option>PUT</option>
+              <option>PATCH</option>
               <option>DELETE</option>
             </select>
           </div>
+
+          <!-- optional request payload: headers and body -->
           <div class="field">
             <button class="payload-toggle" id="payload-toggle">
               ▶ Request Payload (optional)
@@ -57,6 +69,8 @@
               </div>
             </div>
           </div>
+
+          <!-- load test parameters -->
           <div class="field-row">
             <div class="field">
               <label for="rps">Requests per second</label>
@@ -67,10 +81,12 @@
               <input type="number" id="duration" value="10" />
             </div>
           </div>
+
           <p id="request-summary" class="summary"></p>
           <button id="start">Run Test</button>
         </section>
 
+        <!-- results section: populated by results.js after test completes -->
         <section class="results">
           <h2>Results</h2>
           <p class="placeholder">
@@ -79,6 +95,11 @@
         </section>
       </main>
     </div>
-    <script src="script.js"></script>
+
+    <!-- scripts loaded in dependency order -->
+    <script src="scripts/graph.js"></script>
+    <script src="scripts/theme.js"></script>
+    <script src="scripts/results.js"></script>
+    <script src="scripts/index.js"></script>
   </body>
 </html>

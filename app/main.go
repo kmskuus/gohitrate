@@ -1,3 +1,5 @@
+// main.go is the entry point for GoHitRate. It starts the HTTP server,
+// serves the embedded frontend, and exposes the /api/run endpoint.
 package main
 
 import (
@@ -15,31 +17,40 @@ import (
 	"github.com/kmskuus/gohitrate/internal/safety"
 )
 
+// webFiles holds the embedded frontend files from the web/ directory.
+// These are baked into the binary at compile time via go:embed.
 //go:embed web
 var webFiles embed.FS
 
+// servicePort is the port GoHitRate listens on.
 var servicePort = "8080"
 
+// runRequest represents the JSON payload sent from the frontend
+// when the user clicks Run Test.
 type runRequest struct {
-	URL      string `json:"url"`
-	Method   string `json:"method"`
-	RPS      int    `json:"rps"`
-	Duration int    `json:"duration"`
+	URL      string            `json:"url"`
+	Method   string            `json:"method"`
+	RPS      int               `json:"rps"`
+	Duration int               `json:"duration"`
 	Body     string            `json:"body"`
-    Headers  map[string]string `json:"headers"`
+	Headers  map[string]string `json:"headers"`
 }
 
+// runResponse is the JSON response sent back to the frontend
+// after a load test completes or fails.
 type runResponse struct {
-	Success     bool     `json:"success"`
-	Error       string   `json:"error,omitempty"`
-	TotalReqs   uint64   `json:"totalRequests,omitempty"`
-	SuccessRate float64  `json:"successRate,omitempty"`
-	MeanLatency string   `json:"meanLatency,omitempty"`
-	P95Latency  string   `json:"p95Latency,omitempty"`
-	Errors      []string `json:"errors,omitempty"`
-	Timeline    []runner.DataPoint  `json:"timeline,omitempty"`
+	Success     bool               `json:"success"`
+	Error       string             `json:"error,omitempty"`
+	TotalReqs   uint64             `json:"totalRequests,omitempty"`
+	SuccessRate float64            `json:"successRate,omitempty"`
+	MeanLatency string             `json:"meanLatency,omitempty"`
+	P95Latency  string             `json:"p95Latency,omitempty"`
+	Errors      []string           `json:"errors,omitempty"`
+	Timeline    []runner.DataPoint `json:"timeline,omitempty"`
 }
 
+// runHandler handles POST /api/run requests from the frontend.
+// It validates the target URL, runs the load test, and returns results as JSON.
 func runHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
@@ -52,6 +63,7 @@ func runHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// validate the target URL is local or private before running
 	safe, err := safety.IsURLSafe(req.URL)
 	if !safe {
 		json.NewEncoder(w).Encode(runResponse{Success: false, Error: err.Error()})
@@ -64,7 +76,7 @@ func runHandler(w http.ResponseWriter, r *http.Request) {
 		RPS:      req.RPS,
 		Duration: req.Duration,
 		Body:     req.Body,
-    	Headers:  req.Headers,
+		Headers:  req.Headers,
 	})
 
 	json.NewEncoder(w).Encode(runResponse{
@@ -78,24 +90,28 @@ func runHandler(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// openBrowser opens the default browser to the given URL.
+// Called in a goroutine on startup with a short delay to allow the server to start.
 func openBrowser(url string) {
-    time.Sleep(500 * time.Millisecond)
-    switch runtime.GOOS {
-    case "windows":
-        exec.Command("cmd", "/c", "start", url).Start()
-    case "darwin":
-        exec.Command("open", url).Start()
-    default:
-        exec.Command("xdg-open", url).Start()
-    }
+	time.Sleep(500 * time.Millisecond)
+	switch runtime.GOOS {
+	case "windows":
+		exec.Command("cmd", "/c", "start", url).Start()
+	case "darwin":
+		exec.Command("open", url).Start()
+	default:
+		exec.Command("xdg-open", url).Start()
+	}
 }
 
 func main() {
+	// strip the web/ prefix so files are served from root /
 	webFS, err := fs.Sub(webFiles, "web")
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	// open browser in background after server starts
 	go openBrowser("http://localhost:" + servicePort)
 
 	http.Handle("/", http.FileServer(http.FS(webFS)))

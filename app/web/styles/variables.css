@@ -1,0 +1,31 @@
+/* variables.css
+   CSS custom properties for theming.
+   Loaded first so all other stylesheets can reference these variables. */
+
+/* dark theme (default) */
+:root {
+  --bg: #0f1117;
+  --bg-card: #1e2130;
+  --bg-input: #0f1117;
+  --border: #2d3148;
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-faint: #4a5568;
+  --accent: #4f6ef7;
+  --accent-hover: #3d5ce5;
+  --error: #f87171;
+}
+
+/* light theme — applied via body.light by theme.js */
+body.light {
+  --bg: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-input: #f8fafc;
+  --border: #cbd5e1;
+  --text: #0f172a;
+  --text-muted: #475569;
+  --text-faint: #94a3b8;
+  --accent: #4f6ef7;
+  --accent-hover: #3d5ce5;
+  --error: #dc2626;
+}
