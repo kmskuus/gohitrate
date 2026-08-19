@@ -25,6 +25,8 @@ type runRequest struct {
 	Method   string `json:"method"`
 	RPS      int    `json:"rps"`
 	Duration int    `json:"duration"`
+	Body     string            `json:"body"`
+    Headers  map[string]string `json:"headers"`
 }
 
 type runResponse struct {
@@ -61,6 +63,8 @@ func runHandler(w http.ResponseWriter, r *http.Request) {
 		Method:   req.Method,
 		RPS:      req.RPS,
 		Duration: req.Duration,
+		Body:     req.Body,
+    	Headers:  req.Headers,
 	})
 
 	json.NewEncoder(w).Encode(runResponse{

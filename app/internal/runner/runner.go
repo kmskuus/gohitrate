@@ -1,6 +1,7 @@
 package runner
 
 import (
+	"net/http"
 	"time"
 
 	vegeta "github.com/tsenart/vegeta/v12/lib"
@@ -11,6 +12,8 @@ type Config struct {
 	Method   string
 	RPS      int
 	Duration int
+	Body    string
+	Headers map[string]string
 }
 
 type DataPoint struct {
@@ -32,10 +35,23 @@ func Run(config Config) Results {
 	rate := vegeta.Rate{Freq: config.RPS, Per: time.Second}
 	duration := time.Duration(config.Duration) * time.Second
 
-	targeter := vegeta.NewStaticTargeter(vegeta.Target{
+	target := vegeta.Target{
 		Method: config.Method,
 		URL:    config.URL,
-	})
+	}
+
+	if config.Body != "" {
+		target.Body = []byte(config.Body)
+	}
+
+	if len(config.Headers) > 0 {
+		target.Header = make(http.Header)
+		for key, value := range config.Headers {
+			target.Header.Set(key, value)
+		}
+	}
+
+	targeter := vegeta.NewStaticTargeter(target)
 
 	attacker := vegeta.NewAttacker()
 	var metrics vegeta.Metrics
