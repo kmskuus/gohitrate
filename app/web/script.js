@@ -15,6 +15,21 @@ startButton.addEventListener("click", async () => {
     return;
   }
 
+  // collect headers
+  const headerRows = document.querySelectorAll(".header-row");
+  const headers = {};
+  headerRows.forEach((row) => {
+    const inputs = row.querySelectorAll("input");
+    const key = inputs[0].value.trim();
+    const value = inputs[1].value.trim();
+    if (key && value) {
+      headers[key] = value;
+    }
+  });
+
+  // collect body
+  const body = document.getElementById("body").value.trim();
+
   setLoading(true);
 
   try {
@@ -26,6 +41,8 @@ startButton.addEventListener("click", async () => {
         method: form.method.value,
         rps: parseInt(form.rps.value),
         duration: parseInt(form.duration.value),
+        body: body,
+        headers: headers,
       }),
     });
 
@@ -43,6 +60,30 @@ startButton.addEventListener("click", async () => {
   } finally {
     setLoading(false);
   }
+});
+
+// payload toggle
+const payloadToggle = document.getElementById("payload-toggle");
+const payloadContent = document.getElementById("payload-content");
+
+payloadToggle.addEventListener("click", () => {
+  const isOpen = payloadContent.classList.contains("open");
+  payloadContent.classList.toggle("open");
+  payloadToggle.textContent = isOpen
+    ? "▶ Request Payload (optional)"
+    : "▼ Request Payload (optional)";
+});
+
+// headers
+document.getElementById("add-header").addEventListener("click", () => {
+  const row = document.createElement("div");
+  row.className = "header-row";
+  row.innerHTML = `
+        <input type="text" placeholder="Header name">
+        <input type="text" placeholder="Value">
+        <button class="remove-header" onclick="this.parentElement.remove()">×</button>
+    `;
+  document.getElementById("headers-list").appendChild(row);
 });
 
 function setLoading(loading) {
