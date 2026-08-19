@@ -1,3 +1,33 @@
+//theme toggle
+const themeToggle = document.getElementById("theme-toggle");
+const toggleDark = document.getElementById("toggle-dark");
+const toggleLight = document.getElementById("toggle-light");
+const pillHighlight = document.getElementById("pill-highlight");
+
+function setTheme(theme) {
+  document.body.classList.toggle("light", theme === "light");
+  localStorage.setItem("theme", theme);
+
+  const activeEl = theme === "dark" ? toggleDark : toggleLight;
+  const inactiveEl = theme === "dark" ? toggleLight : toggleDark;
+
+  activeEl.classList.add("active");
+  inactiveEl.classList.remove("active");
+
+  pillHighlight.style.width = activeEl.offsetWidth + "px";
+  pillHighlight.style.transform = `translateX(${activeEl.offsetLeft - 3}px)`;
+}
+
+const savedTheme = localStorage.getItem("theme");
+const systemPrefersDark = window.matchMedia(
+  "(prefers-color-scheme: dark)",
+).matches;
+setTheme(savedTheme || (systemPrefersDark ? "dark" : "light"));
+
+toggleDark.addEventListener("click", () => setTheme("dark"));
+toggleLight.addEventListener("click", () => setTheme("light"));
+
+//form handling
 const form = {
   url: document.getElementById("url"),
   method: document.getElementById("method"),
