@@ -1,3 +1,5 @@
+let lastTimeline = null;
+
 //theme toggle
 const themeToggle = document.getElementById("theme-toggle");
 const toggleDark = document.getElementById("toggle-dark");
@@ -16,6 +18,11 @@ function setTheme(theme) {
 
   pillHighlight.style.width = activeEl.offsetWidth + "px";
   pillHighlight.style.transform = `translateX(${activeEl.offsetLeft - 3}px)`;
+
+  // redraw graph with new theme colors if results exist
+  if (lastTimeline) {
+    drawGraph(lastTimeline);
+  }
 }
 
 const savedTheme = localStorage.getItem("theme");
@@ -165,6 +172,7 @@ function showResults(data) {
     `;
 
   if (data.timeline && data.timeline.length > 1) {
+    lastTimeline = data.timeline;
     drawGraph(data.timeline);
   }
 }
@@ -207,7 +215,8 @@ function drawGraph(timeline) {
   const minLatency = 0;
 
   // grid lines
-  ctx.strokeStyle = "#2d3148";
+  const isDark = !document.body.classList.contains("light");
+  ctx.strokeStyle = isDark ? "#2d3148" : "#e2e8f0";
   ctx.lineWidth = 1;
   for (let i = 0; i <= 4; i++) {
     const y = padding.top + (chartHeight / 4) * i;
@@ -255,7 +264,9 @@ function drawGraph(timeline) {
   ctx.stroke();
 
   // fill under line
-  ctx.fillStyle = "rgba(79, 110, 247, 0.1)";
+  ctx.fillStyle = isDark
+    ? "rgba(79, 110, 247, 0.1)"
+    : "rgba(79, 110, 247, 0.15)";
   ctx.lineTo(padding.left + chartWidth, padding.top + chartHeight);
   ctx.lineTo(padding.left, padding.top + chartHeight);
   ctx.closePath();
