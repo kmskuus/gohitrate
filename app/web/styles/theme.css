@@ -1,0 +1,42 @@
+/* theme.css
+   Pill toggle styles for the dark/light theme switcher. */
+
+.pill-toggle {
+  display: inline-flex;
+  position: relative;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 3px;
+  cursor: pointer;
+  gap: 0;
+}
+
+.pill-option {
+  position: relative;
+  padding: 0.25rem 0.6rem;
+  border-radius: 16px;
+  font-size: 1rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.2s;
+  user-select: none;
+}
+
+.pill-option.active {
+  color: var(--bg);
+}
+
+.pill-highlight {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  height: calc(100% - 6px);
+  background: var(--text);
+  border-radius: 14px;
+  z-index: 1;
+  transition:
+    transform 0.2s,
+    width 0.2s;
+}
