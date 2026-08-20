@@ -15,6 +15,14 @@ GoHitRate is a lightweight tool for load testing local HTTP and HTTPS API endpoi
 - Only targets local and private network addresses by default — safe to run without risk of hitting public APIs accidentally
 - Builds available for Windows, macOS, and Linux
 
+## UI
+
+_Dark mode_
+![GoHitRate dark mode](assets/screenshot-dark.png)
+
+_Light mode_
+![GoHitRate light mode](assets/screenshot-light.png)
+
 ## Download & Run
 
 Grab the binary for your platform from the [Releases](https://github.com/kmskuus/gohitrate/releases) page.
@@ -34,14 +42,6 @@ Windows may show a security warning the first time you run GoHitRate. This is ex
 ![SmartScreen step 1](assets/smartscreen-1.png)
 
 ![SmartScreen step 2](assets/smartscreen-2.png)
-
-## Screenshots
-
-_Dark mode_
-![GoHitRate dark mode](assets/screenshot-dark.png)
-
-_Light mode_
-![GoHitRate light mode](assets/screenshot-light.png)
 
 ## Why a browser UI?
 
