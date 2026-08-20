@@ -44,12 +44,19 @@ Browser opens at `http://localhost:8080`
 
 Windows may show a security warning the first time you run GoHitRate. This is expected for unsigned open source software. To proceed:
 
-1. Click **More info**
-2. Click **Run anyway**
+<details>
+<summary>1. Click **More info**</summary>
 
 ![SmartScreen step 1](assets/smartscreen-1.png)
 
+</details>
+
+<details>
+<summary>2. Click **Run anyway**</summary>
+
 ![SmartScreen step 2](assets/smartscreen-2.png)
+
+</details>
 
 ## Why a browser UI?
 
