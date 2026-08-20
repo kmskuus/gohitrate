@@ -17,11 +17,19 @@ GoHitRate is a lightweight tool for load testing local HTTP and HTTPS API endpoi
 
 ## UI
 
-_Dark mode_
+<details>
+<summary>☾ Dark mode</summary>
+
 ![GoHitRate dark mode](assets/screenshot-dark.png)
 
-_Light mode_
+</details>
+
+<details>
+<summary>☼ Light mode</summary>
+
 ![GoHitRate light mode](assets/screenshot-light.png)
+
+</details>
 
 ## Download & Run
 
