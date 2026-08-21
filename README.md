@@ -35,14 +35,35 @@ GoHitRate is a lightweight tool for load testing local HTTP and HTTPS API endpoi
 
 Grab the binary for your platform from the [Releases](https://github.com/kmskuus/gohitrate/releases) page.
 
-**Windows:** double-click `gohitrate-windows-amd64.exe`  
-**macOS/Linux:** `chmod +x gohitrate-* && ./gohitrate-*`
+**Windows:** Double-click `gohitrate-windows-amd64.exe`
 
-Browser opens at `http://localhost:8080`
+**Linux:**
+
+```bash
+chmod +x gohitrate-linux-amd64
+./gohitrate-linux-amd64
+```
+
+**macOS (Intel):**
+
+```bash
+chmod +x gohitrate-macos-amd64
+./gohitrate-macos-amd64
+```
+
+**macOS (Apple Silicon — M1/M2/M3/M4):**
+
+```bash
+chmod +x gohitrate-macos-arm64
+./gohitrate-macos-arm64
+```
+
+The browser will open at [http://localhost:8080](http://localhost:8080).
 
 ### Windows SmartScreen warning
 
-Windows may show a security warning the first time you run GoHitRate. This is expected for unsigned open source software. To proceed:
+Windows may show a security warning the first time you run GoHitRate. This is expected for unsigned open source software.
+To proceed:
 
 <details>
 <summary>1. Click **More info**</summary>
@@ -57,6 +78,19 @@ Windows may show a security warning the first time you run GoHitRate. This is ex
 ![SmartScreen step 2](assets/smartscreen-2.png)
 
 </details>
+
+### macOS security warning
+
+macOS may show a security warning the first time you run GoHitRate. This is expected for unsigned open-source software.
+
+To proceed:
+
+1. Open the downloaded binary.
+2. If macOS shows a warning that the application cannot be opened, click **Done**.
+3. Open **System Settings → Privacy & Security**.
+4. Scroll down to the **Security** section.
+5. Click **Open Anyway** next to the message about GoHitRate.
+6. Confirm by clicking **Open Anyway** when prompted.
 
 ## Why a browser UI?
 
