@@ -5,6 +5,10 @@ on:
     tags:
       - "v*"
 
+# Grants this specific workflow permission to create a release
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,21 +23,24 @@ jobs:
           go-version: "1.24.13"
           cache-dependency-path: app/go.sum
 
+      - name: Create dist directory
+        run: mkdir -p dist
+
       - name: Build Windows
         working-directory: app
-        run: GOOS=windows GOARCH=amd64 go build -o ../dist/gohitrate-windows-amd64.exe .
+        run: GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o ../dist/gohitrate-windows-amd64.exe .
 
       - name: Build macOS Intel
         working-directory: app
-        run: GOOS=darwin GOARCH=amd64 go build -o ../dist/gohitrate-macos-amd64 .
+        run: GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o ../dist/gohitrate-macos-amd64 .
 
       - name: Build macOS ARM64
         working-directory: app
-        run: GOOS=darwin GOARCH=arm64 go build -o ../dist/gohitrate-macos-arm64 .
+        run: GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o ../dist/gohitrate-macos-arm64 .
 
-      - name: Build Linux
+      - name: Build Linux (Static)
         working-directory: app
-        run: GOOS=linux GOARCH=amd64 go build -o ../dist/gohitrate-linux-amd64 .
+        run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o ../dist/gohitrate-linux-amd64 .
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
