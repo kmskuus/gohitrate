@@ -58,7 +58,7 @@ chmod +x gohitrate-macos-arm64
 ./gohitrate-macos-arm64
 ```
 
-The browser will open at [http://localhost:8080](http://localhost:8080).
+The browser will automatically open the UI using a free port assigned by your operating system. You can also see the chosen port printed in your terminal window. This guarantees no conflicts with your running APIs and ensures only safe, unprivileged ports are used.
 
 ### Windows SmartScreen warning
 
