@@ -8,9 +8,11 @@ import (
 	"fmt"
 	"io/fs"
 	"log"
+	"net"
 	"net/http"
 	"os/exec"
 	"runtime"
+	"strconv"
 	"time"
 
 	"github.com/kmskuus/gohitrate/internal/runner"
@@ -21,9 +23,6 @@ import (
 // These are baked into the binary at compile time via go:embed.
 //go:embed web
 var webFiles embed.FS
-
-// servicePort is the port GoHitRate listens on.
-var servicePort = "8080"
 
 // runRequest represents the JSON payload sent from the frontend
 // when the user clicks Run Test.
@@ -111,12 +110,27 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// 1. Listen on port 0 (explicitly on IPv4 loopback for maximum compatibility)
+	listener, err := net.Listen("tcp", "127.0.0.1:0")
+	if err != nil {
+		log.Fatalf("Failed to listen: %v", err)
+	}
+
+	// 2. Extract the port and assign it to servicePort 
+	servicePort := strconv.Itoa(listener.Addr().(*net.TCPAddr).Port)
+	
+	// Format the URL using localhost instead of the IP address!
+	url := fmt.Sprintf("http://localhost:%s", servicePort)
+
+	fmt.Printf("GoHitRate started!\n")
+	fmt.Printf("Opening browser to %s\n", url)
+
 	// open browser in background after server starts
-	go openBrowser("http://localhost:" + servicePort)
+	go openBrowser(url)
 
 	http.Handle("/", http.FileServer(http.FS(webFS)))
 	http.HandleFunc("/api/run", runHandler)
 
-	fmt.Println("GoHitRate running at http://localhost:" + servicePort)
-	log.Fatal(http.ListenAndServe(":"+servicePort, nil))
+	// 3. Start the server
+	log.Fatal(http.Serve(listener, nil))
 }
