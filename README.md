@@ -35,27 +35,29 @@ GoHitRate is a lightweight tool for load testing local HTTP and HTTPS API endpoi
 
 Grab the binary for your platform from the [Releases](https://github.com/kmskuus/gohitrate/releases) page.
 
-**Windows:** Double-click `gohitrate-windows-amd64.exe`
+Replace `VERSION` below with the release tag (e.g. `v1.2.0`).
+
+**Windows:** Double-click `gohitrate-VERSION-windows-amd64.exe`
 
 **Linux:**
 
 ```bash
-chmod +x gohitrate-linux-amd64
-./gohitrate-linux-amd64
+chmod +x gohitrate-VERSION-linux-amd64
+./gohitrate-VERSION-linux-amd64
 ```
 
 **macOS (Intel):**
 
 ```bash
-chmod +x gohitrate-macos-amd64
-./gohitrate-macos-amd64
+chmod +x gohitrate-VERSION-macos-amd64
+./gohitrate-VERSION-macos-amd64
 ```
 
 **macOS (Apple Silicon — M1/M2/M3/M4):**
 
 ```bash
-chmod +x gohitrate-macos-arm64
-./gohitrate-macos-arm64
+chmod +x gohitrate-VERSION-macos-arm64
+./gohitrate-VERSION-macos-arm64
 ```
 
 The browser will automatically open the UI using a free port assigned by your operating system. You can also see the chosen port printed in your terminal window. This guarantees no conflicts with your running APIs and ensures only safe, unprivileged ports are used.
