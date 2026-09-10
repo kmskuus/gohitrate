@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.24.13"
+          cache-dependency-path: app/go.sum
+
+      - name: Vet
+        working-directory: app
+        run: go vet ./...
+
+      - name: Run tests
+        working-directory: app
+        run: go test ./...
+
+      - name: Build
+        working-directory: app
+        run: go build ./...
