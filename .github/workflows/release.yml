@@ -51,7 +51,7 @@ jobs:
         run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o ../dist/${{ github.event.repository.name }}-${{ github.ref_name }}-linux-amd64 .
 
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: |
             dist/${{ github.event.repository.name }}-${{ github.ref_name }}-windows-amd64.exe
