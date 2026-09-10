@@ -1,6 +1,6 @@
 #Minimal debian configured to user have passwordless sudo just like official devcontainer
 #Default devcontainer dockerfile. See devcontainer.json what Dockerfile is used. Oherwise delete or ignore.
-FROM golang:1.24-bookworm
+FROM golang:1.27-bookworm
 
 # Prevent interactive prompts during installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -25,3 +25,4 @@ USER vscode
 # Example: RUN sudo apt-get update && sudo apt-get install -y python3
 
 # Rebuild the container after changes: Ctrl+Shift+P → Rebuild Container
+RUN go install golang.org/x/vuln/cmd/govulncheck@latest
