@@ -23,6 +23,10 @@ jobs:
           go-version: "1.24.13"
           cache-dependency-path: app/go.sum
 
+      - name: Run tests
+        working-directory: app
+        run: go test ./...
+
       - name: Create dist directory
         run: mkdir -p dist
 

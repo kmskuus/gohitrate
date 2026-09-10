@@ -2,6 +2,8 @@
 
 > Zero-install local API load tester. Download, run, done.
 
+![Release](https://github.com/kmskuus/gohitrate/actions/workflows/release.yml/badge.svg)
+
 GoHitRate is a lightweight tool for load testing local HTTP and HTTPS API endpoints during development. No installation, no configuration files, no dependencies. Download the binary, run it, and your browser opens ready to go.
 
 ## Features
