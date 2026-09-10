@@ -1,6 +1,5 @@
 #Minimal debian configured to user have passwordless sudo just like official devcontainer
 #Default devcontainer dockerfile. See devcontainer.json what Dockerfile is used. Oherwise delete or ignore.
-#TODO: update/remove/delete this according to repo requirements
 FROM golang:1.24-bookworm
 
 # Prevent interactive prompts during installation
